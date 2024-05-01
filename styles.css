@@ -1,0 +1,69 @@
+/* styles.css */
+
+.sortable-list {
+  padding-left: 20px; /* リストアイテムの左側にスペースを追加して番号が見えるようにする */
+  list-style-position: outside; /* 番号をアイテムの外側に表示 */
+}
+
+ol.sortable-list {
+  list-style-type: decimal; /* 10進数の番号付け */
+}
+
+.list-title {
+  font-weight: bold;
+  background-color: #f0f0f0;
+  padding: 8px;
+  margin-top: 10px;
+  list-style-type: none;
+}
+
+.draggable {
+  padding: 6px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  margin-bottom: 5px;
+  cursor: grab;
+}
+
+.draggable.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
+.bar-container {
+width: 100%;
+background-color: #f0f0f0;
+text-align: left;
+color: white;
+margin: 5px 0;
+}
+
+.bar {
+height: 20px;
+padding-right: 5px;
+line-height: 20px; /* 中央揃え */
+}
+
+.bar-segment {
+display: inline-block;
+/* 左float: left; から右に積み上げ */
+height: 100%;
+}
+
+.container {
+  display: flex;
+  height: 100vh; /* 画面の高さに合わせる */
+}
+
+.left-panel {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto; /* 内容が多い時にスクロールバーを表示 */
+}
+
+.right-panel {
+  flex: 2;
+  padding: 10px;
+  background-color: #fff;
+  overflow-y: auto; /* 内容が多い時にスクロールバーを表示 */
+}

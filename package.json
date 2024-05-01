@@ -1,0 +1,14 @@
+{
+  "name": "decision-making",
+  "version": "1.0.0",
+  "description": "Hello World!",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Tekkotsu",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^30.0.1"
+  }
+}
