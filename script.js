@@ -117,7 +117,8 @@ class AHPApp {
         // 各クライテリアごとに代替案のリストを設定 
         this.criteria.forEach(criterion => { 
             const alList = this.createList("評価基準「" + criterion.name + "」での順位：", criterion.alternatives, true); 
-            this.leftPanel.appendChild(alList); 
+            //const alList = this.createList(criterion.name, criterion.alternatives, true); 
+            this.leftPanel.appendChild(alList);
             this.setupDraggableList(alList, criterion.alternatives, true); 
         }); 
         
@@ -218,7 +219,8 @@ class AHPApp {
 
         // クライテリアの代替案の重みも再計算する必要がある場合
         if (isAlternativeList) {
-            const criterionName = list.querySelector('.list-title').textContent;
+            const fullTitle = list.querySelector('.list-title').textContent;
+            const criterionName = fullTitle.slice(5, -6); // "評価基準「" と "」での順位：" を削除（邪道な方法な気がするから、後で根本的に修正したい）
             const criterion = this.criteria.find(c => c.name === criterionName);
             criterion.calculateAlternativesWeights();
         }
