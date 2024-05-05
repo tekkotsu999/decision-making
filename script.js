@@ -71,47 +71,22 @@ class AHPApp {
         this.alternatives = [];
     }
 
-    // テキストエリアに入っている文字列から、
-    // criteriaとalternativesに、各データを格納する
-    parseInput(input) {
-        const lines = input.split('\n');
-        let currentSection = null;
-        let criteriaData = [];
-        let alternativesData = [];
+    // テキストエリアに入っている文字列から、criteriaとalternativesにデータを格納する関数を更新
+    parseInput(criteriaInput, alternativesInput) {
+        const criteriaItems = criteriaInput.split(',').map(item => item.trim()).filter(item => item.length > 0);
+        const alternativeItems = alternativesInput.split(',').map(item => item.trim()).filter(item => item.length > 0);
 
-        lines.forEach(line => {
-            let trimmedLine = line.trim();
-            if (trimmedLine === 'cr:') {
-                currentSection = 'criteria';
-            } else if (trimmedLine === 'al:') {
-                currentSection = 'alternatives';
-            } else if (trimmedLine && currentSection) {
-                const items = trimmedLine.split(',').map(item => item.trim()).filter(item => item.length > 0);
-                if (currentSection === 'criteria') {
-                    criteriaData = items.map((item, index) => ({ name: item, order: index + 1 }));
-                } else if (currentSection === 'alternatives') {
-                    alternativesData = items.map((item, index) => ({ name: item, order: index + 1 }));
-                }
-            }
-        });
+        this.criteria = criteriaItems.map((name, index) => new Criterion(name, index + 1));
+        this.alternatives = alternativeItems.map((name, index) => new Alternative(name, index + 1));
 
-        this.criteria = criteriaData.map(criterion => {
-            const newCriterion = new Criterion(criterion.name, criterion.order);
-            alternativesData.forEach(alt => {
-                newCriterion.addAlternative(new Alternative(alt.name, alt.order));
-            });
-            return newCriterion;
-        });
-
-        
-        // 各criterionと、alternativeの初期weightを計算
-        const totalOrderSum = this.criteria.reduce((sum, item) => sum + item.order, 0);
+        // 各クライテリアに代替案を追加
         this.criteria.forEach(criterion => {
-            criterion.calculateWeight(totalOrderSum)  
-            criterion.calculateAlternativesWeights();
+            this.alternatives.forEach(alt => criterion.addAlternative(new Alternative(alt.name, alt.order)));
         });
 
-        // this.debugCriteria();
+        // 各criterionの重みと、代替案のスコアを計算
+        const totalOrderSum = this.criteria.reduce((sum, criterion) => sum + criterion.order, 0);
+        this.criteria.forEach(criterion => criterion.calculateWeight(totalOrderSum));
     }
 
 

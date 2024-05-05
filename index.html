@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>AHP Analysis Tool</title>
+    <title>Decision Making Analysis Tool</title>
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
     <link rel="stylesheet" href="styles.css" type="text/css">
 </head>
@@ -12,14 +12,17 @@
     Chromium <span id="chrome-version"></span>,
     and Electron <span id="electron-version"></span>.
 
-    <h1>AHP Analysis Tool</h1>
-    <textarea id="lists-input" rows="10" cols="50">
-cr:
-cr1,cr2,cr3,
-al:
-al1,al2,al3,al4,al5,
-    </textarea>
-    <button onclick="initializeApp()">Generate Lists</button>
+<h2>Decision Making Analysis Tool</h2>
+<div style="display: flex;">
+    <div>評価基準 (Criteria ):<br>
+        <textarea id="criteria-lists-input" rows="5" cols="60">cr1,cr2,cr3,</textarea>
+    </div>
+
+    <div style="margin-left: 20px;">代替案 (Alternative):<br>
+        <textarea id="alternative-lists-input" rows="5" cols="60">al1,al2,al3,al4,al5,</textarea>
+    </div>
+</div>
+<button onclick="initializeApp()">Generate Lists</button>
 
     <div id="app-container" class="container">
         <div class="left-panel" id="left-panel">
@@ -34,7 +37,10 @@ al1,al2,al3,al4,al5,
     <script>
         function initializeApp() {
             const app = new AHPApp();
-            app.parseInput(document.getElementById('lists-input').value);
+            const criteriaInput = document.getElementById('criteria-lists-input').value;
+            const alternativesInput = document.getElementById('alternative-lists-input').value;
+            //app.parseInput(document.getElementById('lists-input').value);
+            app.parseInput(criteriaInput, alternativesInput);
             app.setupUI();
         }
     </script>
