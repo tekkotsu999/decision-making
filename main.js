@@ -19,7 +19,7 @@ const createWindow = () => {
   mainWindow.loadFile('index.html')
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
@@ -43,6 +43,20 @@ app.whenReady().then(() => {
             }
             event.reply('save-data-response', 'Success');
             console.log('Data saved successfully to:', filePath);
+        });
+    });
+    
+    // IPC ハンドラの設定
+    // レンダラープロセスからの読み込みリクエストを受け取り、ファイルの内容を読み込んでレンダラープロセスに返す
+    ipcMain.on('load-data', (event) => {
+        const filePath = path.join(__dirname, 'myData.json');
+        fs.readFile(filePath, 'utf-8', (err, data) => {
+            if (err) {
+                console.error('Error loading data:', err);
+                event.reply('load-data-response', { success: false, message: 'Failed to load data', data: null });
+                return;
+            }
+            event.reply('load-data-response', { success: true, message: 'Data loaded successfully', data: JSON.parse(data) });
         });
     });
 

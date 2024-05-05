@@ -353,4 +353,38 @@ function saveData() {
     window.electronAPI.saveData(data);
 }
 
+// ***** ファイル読み込み処理 *****
+function loadData() {
+    window.electronAPI.loadData();
+}
+
+window.electronAPI.receiveLoadDataResponse((event, { success, message, data }) => {
+    if (success) {
+        console.log('Data loaded:', data);
+
+        // Criterion と Alternative オブジェクトを再構築
+        app.criteria = data.criteria.map(c => {
+            let criterion = new Criterion(c.name, c.order);
+            criterion.weight = c.weight;
+            criterion.alternatives = c.alternatives.map(a => {
+                let alternative = new Alternative(a.name, a.order);
+                alternative.weight = a.weight;
+                alternative.score = a.score;
+                return alternative;
+            });
+            return criterion;
+        });
+
+        // Alternative オブジェクトは独立しているので別途構築
+        app.alternatives = data.alternatives.map(a => new Alternative(a.name, a.order));
+
+        // UI 更新
+        app.setupUI();
+
+    } else {
+        console.error('Failed to load data:', message);
+    }
+});
+
+// ***** メインプロセス *****
 const app = new AHPApp();
