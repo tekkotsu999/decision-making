@@ -8,12 +8,14 @@ const path = require('node:path');
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 800,
+    // width: 1000,
+    // height: 800,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
   })
+
+  mainWindow.maximize();   // ウィンドウを最大化
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
