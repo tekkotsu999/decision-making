@@ -22,7 +22,9 @@
         <textarea id="alternative-lists-input" rows="5" cols="60">al1,al2,al3,al4,al5,</textarea>
     </div>
 </div>
+
 <button onclick="initializeApp()">Generate Lists</button>
+<button onclick="saveData()">Save Data</button>
 
     <div id="app-container" class="container">
         <div class="left-panel" id="left-panel">
@@ -34,15 +36,5 @@
     </div>
     
     <script src="script.js"></script>
-    <script>
-        function initializeApp() {
-            const app = new AHPApp();
-            const criteriaInput = document.getElementById('criteria-lists-input').value;
-            const alternativesInput = document.getElementById('alternative-lists-input').value;
-            //app.parseInput(document.getElementById('lists-input').value);
-            app.parseInput(criteriaInput, alternativesInput);
-            app.setupUI();
-        }
-    </script>
 </body>
 </html>

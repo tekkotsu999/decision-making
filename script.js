@@ -332,6 +332,25 @@ class AHPApp {
 
         return alternativeScores;
     }
-
-
 }
+
+// ***** AHPAppの初期化関数 *****
+function initializeApp() {
+    const criteriaInput = document.getElementById('criteria-lists-input').value;
+    const alternativesInput = document.getElementById('alternative-lists-input').value;
+    //app.parseInput(document.getElementById('lists-input').value);
+    app.parseInput(criteriaInput, alternativesInput);
+    app.setupUI();
+}
+
+// ***** データ保存関数 *****
+function saveData() {
+    //const app = new AHPApp();  // すでにインスタンスがある場合はそれを使用
+    const data = {
+        criteria: app.criteria,
+        alternatives: app.alternatives
+    };
+    window.electronAPI.saveData(data);
+}
+
+const app = new AHPApp();
