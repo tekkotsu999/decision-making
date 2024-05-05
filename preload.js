@@ -45,11 +45,9 @@ const { contextBridge, ipcRenderer } = require('electron');
 // ここでは、electronAPI という名前でオブジェクトが公開されています。
 contextBridge.exposeInMainWorld('electronAPI', {
 
-    // save-data というイベント名でデータをメインプロセスへ送信します。これはデータ保存をトリガーするために使用されます。
-    saveData: (data) => ipcRenderer.send('save-data', data),
-    // メインプロセスからの save-data-response イベントを待ち受け、そのデータを処理するためのコールバック関数を登録する。
-    receiveSaveDataResponse: (callback) => ipcRenderer.on('save-data-response', callback),
 
+    // ***** ファイル保存 *****
+    saveFileDialog: (data) => ipcRenderer.invoke('save-file-dialog', data),
     
     // ***** ファイル読み込み *****
     // ファイルダイアログを開くことをメインプロセスに依頼する。

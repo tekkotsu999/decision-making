@@ -344,17 +344,22 @@ function initializeApp() {
 }
 
 // ***** データ保存関数 *****
-function saveData() {
-    //const app = new AHPApp();  // すでにインスタンスがある場合はそれを使用
+// seveDataButtonクリックのイベントリスナー定義
+const saveDataButton = document.getElementById('saveDataButton');
+saveDataButton.addEventListener('click', async () => {
     const data = {
         criteria: app.criteria,
         alternatives: app.alternatives
     };
-    window.electronAPI.saveData(data);
-}
+    const result = await window.electronAPI.saveFileDialog(data);
+    if (result.success) {
+        console.log('File saved to:', result.path);
+    } else {
+        console.log('File save canceled or failed');
+    }
+});
 
 // ***** ファイル読み込み処理 *****
-
 // loadDataButtonクリックのイベントリスナー定義
 const loadDataButton = document.getElementById('loadDataButton');
 loadDataButton.addEventListener('click', async () => {

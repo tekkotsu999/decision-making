@@ -32,19 +32,28 @@ app.whenReady().then(() => {
 
     createWindow()
 
-    // IPC ハンドラの設定
-    ipcMain.on('save-data', (event, data) => {
-        const filePath = path.join(__dirname, 'myData.json'); // ファイルパスの指定
-        fs.writeFile(filePath, JSON.stringify(data, null, 2), (err) => {
-            if (err) {
-                event.reply('save-data-response', 'Failure');
-                console.error('Error saving data:', err);
-                return;
-            }
-            event.reply('save-data-response', 'Success');
-            console.log('Data saved successfully to:', filePath);
+    // ***** IPC ハンドラの設定 *****
+    // 保存ダイアログを追加
+    ipcMain.handle('save-file-dialog', async (event, data) => {
+        const mainWindow = BrowserWindow.getFocusedWindow();
+
+        // 保存ダイアログを表示
+        const { canceled, filePath } = await dialog.showSaveDialog(mainWindow, {
+            title: 'Save your file',
+            buttonLabel: 'Save',
+            filters: [{ name: 'JSON Files', extensions: ['json'] }],
+            properties: ['showOverwriteConfirmation']
         });
+
+        if (canceled || !filePath) {
+            return { success: false, path: '' };
+        } else {
+            // ファイルを保存
+            fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+            return { success: true, path: filePath };
+        }
     });
+    
     
     // レンダラープロセスから、ファイルダイアログを開くリクエストを受取り、指定のフィアルパスをレンダラープロセスに返す
     ipcMain.handle('open-file-dialog', async (event) => {
@@ -76,6 +85,7 @@ app.whenReady().then(() => {
         });
     });
     
+
 
     app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
