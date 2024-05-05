@@ -109,14 +109,14 @@ class AHPApp {
         this.rightPanel.innerHTML = ''; // 左側のパネルをクリア
 
         // クライテリアのリストを設定
-        const crList = this.createList('Criteria', this.criteria, false);
+        const crList = this.createList('「評価基準」の順位：', this.criteria, false);
 
         this.leftPanel.appendChild(crList);
         this.setupDraggableList(crList, this.criteria, false);
         
         // 各クライテリアごとに代替案のリストを設定 
         this.criteria.forEach(criterion => { 
-            const alList = this.createList(criterion.name, criterion.alternatives, true); 
+            const alList = this.createList("評価基準「" + criterion.name + "」での順位：", criterion.alternatives, true); 
             this.leftPanel.appendChild(alList); 
             this.setupDraggableList(alList, criterion.alternatives, true); 
         }); 
