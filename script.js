@@ -73,8 +73,9 @@ class AHPApp {
 
     // テキストエリアに入っている文字列から、criteriaとalternativesにデータを格納する関数を更新
     parseInput(criteriaInput, alternativesInput) {
-        const criteriaItems = criteriaInput.split(',').map(item => item.trim()).filter(item => item.length > 0);
-        const alternativeItems = alternativesInput.split(',').map(item => item.trim()).filter(item => item.length > 0);
+        const criteriaItems = criteriaInput.split('\n').map(item => item.trim()).filter(item => item.length > 0);
+        
+        const alternativeItems = alternativesInput.split('\n').map(item => item.trim()).filter(item => item.length > 0);
 
         this.criteria = criteriaItems.map((name, index) => new Criterion(name, index + 1));
         this.alternatives = alternativeItems.map((name, index) => new Alternative(name, index + 1));
@@ -310,7 +311,7 @@ class AHPApp {
 
     getColorForCriterion(index) {
         // 色を定義した配列から色を取得する（ここで色の配列を定義する）
-        const colors = ['#FF6347', '#4682B4', '#32CD32', '#FFD700', '#6A5ACD'];
+        const colors = ['#FF6347', '#4682B4', '#32CD32', '#FFD700', '#6A5ACD', '#E9967A', '#7B68EE', '#3CB371', '#FFA500', '#DA70D6'];
         return colors[index % colors.length];
     }
 
