@@ -1,7 +1,7 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const fs = require('fs');
 const path = require('node:path');
 
@@ -46,7 +46,23 @@ app.whenReady().then(() => {
         });
     });
     
-    // IPC ハンドラの設定
+    // レンダラープロセスから、ファイルダイアログを開くリクエストを受取り、指定のフィアルパスをレンダラープロセスに返す
+    ipcMain.handle('open-file-dialog', async (event) => {
+        const mainWindow = BrowserWindow.getFocusedWindow();
+
+        // ファイルダイアログを表示
+        const { canceled, filePaths } = await dialog.showOpenDialog(mainWindow, {
+            properties: ['openFile'],
+            filters: [{ name: 'JSON Files', extensions: ['json'] }]
+        });
+
+        if (canceled) {
+            return { success: false, path: '' };
+        } else {
+            return { success: true, path: filePaths[0] };
+        }
+    });
+    
     // レンダラープロセスからの読み込みリクエストを受け取り、ファイルの内容を読み込んでレンダラープロセスに返す
     ipcMain.on('load-data', (event) => {
         const filePath = path.join(__dirname, 'myData.json');
@@ -59,6 +75,7 @@ app.whenReady().then(() => {
             event.reply('load-data-response', { success: true, message: 'Data loaded successfully', data: JSON.parse(data) });
         });
     });
+    
 
     app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the

@@ -7,10 +7,6 @@
 </head>
 
 <body>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
-
 <h2>Decision Making Analysis Tool</h2>
 <div style="display: flex;">
     <div>評価基準 (Criteria ):<br>
@@ -24,7 +20,7 @@
 
 <button onclick="initializeApp()">Generate Lists</button>
 <button onclick="saveData()">Save Data</button>
-<button onclick="loadData()">Load Data</button>
+<button id="loadDataButton">Load Data</button>
 
     <div id="app-container" class="container">
         <div class="left-panel" id="left-panel">

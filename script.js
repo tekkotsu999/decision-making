@@ -354,10 +354,23 @@ function saveData() {
 }
 
 // ***** ファイル読み込み処理 *****
-function loadData() {
-    window.electronAPI.loadData();
-}
 
+// loadDataButtonクリックのイベントリスナー定義
+const loadDataButton = document.getElementById('loadDataButton');
+loadDataButton.addEventListener('click', async () => {
+    // electronと通信
+    // ファイルダイアログを使って、読み込む対象のファイルパスを取得
+    const result = await window.electronAPI.openFileDialog();
+    if (result.success) {
+        // そのファイルパスのデータを読み込む
+        // electronに、そのデータの内容のロードをリクエスト
+        window.electronAPI.loadData(result.path);
+    } else {
+        console.log('No file selected');
+    }
+});
+
+// electronからロードデータを取得する（非同期処理）
 window.electronAPI.receiveLoadDataResponse((event, { success, message, data }) => {
     if (success) {
         console.log('Data loaded:', data);
@@ -386,5 +399,6 @@ window.electronAPI.receiveLoadDataResponse((event, { success, message, data }) =
     }
 });
 
-// ***** メインプロセス *****
+
+// ***** script.jsの実行処理 *****
 const app = new AHPApp();

@@ -50,8 +50,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
     // メインプロセスからの save-data-response イベントを待ち受け、そのデータを処理するためのコールバック関数を登録する。
     receiveSaveDataResponse: (callback) => ipcRenderer.on('save-data-response', callback),
 
+    
+    // ***** ファイル読み込み *****
+    // ファイルダイアログを開くことをメインプロセスに依頼する。
+    openFileDialog: () => ipcRenderer.invoke('open-file-dialog'),
     // データの読み込みをメインプロセスに依頼する。
-    loadData: () => ipcRenderer.send('load-data'),
+    loadData: (filePath) => ipcRenderer.send('load-data', filePath),
     // load-data-response イベントに対するレスポンスを待ち受けるために、コールバック関数を登録する。
     receiveLoadDataResponse: (callback) => ipcRenderer.on('load-data-response', callback)
 
