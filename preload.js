@@ -44,8 +44,6 @@ const { contextBridge, ipcRenderer } = require('electron');
 // レンダラープロセスのグローバルなスコープに名前付きオブジェクトを公開します。
 // ここでは、electronAPI という名前でオブジェクトが公開されています。
 contextBridge.exposeInMainWorld('electronAPI', {
-
-
     // ***** ファイル保存 *****
     saveFileDialog: (data) => ipcRenderer.invoke('save-file-dialog', data),
     
@@ -58,4 +56,3 @@ contextBridge.exposeInMainWorld('electronAPI', {
     receiveLoadDataResponse: (callback) => ipcRenderer.on('load-data-response', callback)
 
 });
-

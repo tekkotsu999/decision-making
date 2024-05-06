@@ -6,19 +6,19 @@ const fs = require('fs');
 const path = require('node:path');
 
 const createWindow = () => {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    // width: 1000,
-    // height: 800,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
-    }
-  })
+    // Create the browser window.
+    const mainWindow = new BrowserWindow({
+        // width: 1000,
+        // height: 800,
+        webPreferences: {
+          preload: path.join(__dirname, 'preload.js')
+        }
+    })
 
-  mainWindow.maximize();   // ウィンドウを最大化
+    mainWindow.maximize();   // ウィンドウを最大化
 
-  // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+    // and load the index.html of the app.
+    mainWindow.loadFile('index.html')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -85,8 +85,6 @@ app.whenReady().then(() => {
             event.reply('load-data-response', { success: true, message: 'Data loaded successfully', data: JSON.parse(data) });
         });
     });
-    
-
 
     app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
@@ -101,6 +99,4 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
-
-
 
