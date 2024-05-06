@@ -401,6 +401,15 @@ window.electronAPI.receiveLoadDataResponse((event, { success, message, data }) =
         // UI 更新
         app.setupUI();
 
+        // 既存のテキストエリアのフォーマットに基づいてデータを整形
+        let criteriaText = data.criteria.map(c => `${c.name}`).join('\n');
+        let alternativesText = data.alternatives.map(a => `${a.name}`).join('\n');
+
+        // 既存のテキストエリアにデータを設定
+        document.getElementById('criteria-lists-input').value = criteriaText;
+        document.getElementById('alternative-lists-input').value = alternativesText;
+
+
     } else {
         console.error('Failed to load data:', message);
     }
