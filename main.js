@@ -32,7 +32,7 @@ app.whenReady().then(() => {
     // カレントディレクトリを main.js が存在するディレクトリに設定
     process.chdir(__dirname);
 
-    createWindow()
+    createWindow();
 
     // ***** IPC ハンドラの設定 *****
     // 保存ダイアログを追加

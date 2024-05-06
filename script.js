@@ -290,12 +290,13 @@ class AHPApp {
                 segment.style.backgroundColor = this.getColorForCriterion(index); // 色を動的に割り当てる関数を呼び出す
                 const width = (score / maxScore) * 80;
                 segment.style.width = `${width}%`;
-                segment.textContent = `${criterionName}: ${score.toFixed(3)}`; // クライテリア名とスコアを表示
-                segment.textContent = `${score.toFixed(3)}`; // クライテリア名とスコアを表示
+                //segment.textContent = `${criterionName}: ${score.toFixed(3)}`; // クライテリア名とスコアを表示
+                //segment.textContent = `${score.toFixed(3)}`; // クライテリア名とスコアを表示
+                segment.textContent = `${criterionName}`; // クライテリア名を表示
                 totalWidth += width;
                 bar.appendChild(segment);
             });
-
+            
             const label = document.createElement('div');
             label.textContent = `${name}`;
             label.style.padding = '5px';
@@ -305,7 +306,6 @@ class AHPApp {
             scoreEntry.appendChild(bar);
             scoreDisplay.appendChild(scoreEntry);
         });
-
         container.appendChild(scoreDisplay);  // 最終スコアをコンテナに追加
     }
 

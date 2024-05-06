@@ -1,5 +1,6 @@
 /* styles.css */
 
+/***** list *****/
 .sortable-list {
   padding-left: 20px; /* リストアイテムの左側にスペースを追加して番号が見えるようにする */
   list-style-position: outside; /* 番号をアイテムの外側に表示 */
@@ -30,26 +31,30 @@ ol.sortable-list {
   cursor: grabbing;
 }
 
+/***** グラフ *****/
 .bar-container {
-width: 100%;
-background-color: #f0f0f0;
-text-align: left;
-color: white;
-margin: 5px 0;
+    width: 100%;
+    background-color: #f0f0f0;
+    text-align: left;
+    color: white;
+    margin: 5px 0;
 }
 
 .bar {
-height: 20px;
-padding-right: 5px;
-line-height: 20px; /* 中央揃え */
+    height: 20px;
+    padding-right: 5px;
+    line-height: 20px; /* 中央揃え */
 }
 
 .bar-segment {
-display: inline-block;
-/* 左float: left; から右に積み上げ */
-height: 100%;
+    white-space: nowrap;      /* テキストを折り返さない */
+    overflow: hidden;         /* オーバーフローするテキストを隠す */
+    text-overflow: ellipsis;  /* オーバーフロー時に省略記号を表示 */
+    display: inline-block;
+    height: 100%;
 }
 
+/***** 左右分割パネル *****/
 .container {
   display: flex;
   height: 100vh; /* 画面の高さに合わせる */
