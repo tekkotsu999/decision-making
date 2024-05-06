@@ -43,7 +43,7 @@ app.whenReady().then(() => {
         const { canceled, filePath } = await dialog.showSaveDialog(mainWindow, {
             title: 'Save your file',
             buttonLabel: 'Save',
-            filters: [{ name: 'JSON Files', extensions: ['json'] }],
+            filters: [{ name: 'DMA Files', extensions: ['dma'] }],
             properties: ['showOverwriteConfirmation']
         });
 
@@ -64,7 +64,7 @@ app.whenReady().then(() => {
         // ファイルダイアログを表示
         const { canceled, filePaths } = await dialog.showOpenDialog(mainWindow, {
             properties: ['openFile'],
-            filters: [{ name: 'JSON Files', extensions: ['json'] }]
+            filters: [{ name: 'DMA Files', extensions: ['dma'] }]
         });
 
         if (canceled) {
@@ -75,8 +75,7 @@ app.whenReady().then(() => {
     });
     
     // レンダラープロセスからの読み込みリクエストを受け取り、ファイルの内容を読み込んでレンダラープロセスに返す
-    ipcMain.on('load-data', (event) => {
-        const filePath = path.join(__dirname, 'myData.json');
+    ipcMain.on('load-data', (event, filePath) => {
         fs.readFile(filePath, 'utf-8', (err, data) => {
             if (err) {
                 console.error('Error loading data:', err);
